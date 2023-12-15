@@ -1,6 +1,6 @@
 {
   "name": "sdf-deploy-xml",
-  "displayName": "sdf-deploy-xml",
+  "displayName": "SDF Deploy XML",
   "description": "",
   "version": "0.0.1",
   "engines": {
@@ -14,8 +14,32 @@
   "contributes": {
     "commands": [
       {
-        "command": "sdf-deploy-xml.helloWorld",
-        "title": "Hello World"
+        "command": "extension.createResetDeploy",
+        "title": "Create/Reset deploy.xml"
+      },
+      {
+        "command": "extension.addFileToDeploy",
+        "title": "Add current/selected file to deploy.xml"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "extension.addFileToDeploy",
+          "group": "z_commands@1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "extension.createResetDeploy",
+        "key": "ctrl+; shift+-",
+        "mac": "cmd+; shift+-"
+      },
+      {
+        "command": "extension.addFileToDeploy",
+        "key": "ctrl+; shift+=",
+        "mac": "cmd+; shift+="
       }
     ]
   },
@@ -28,15 +52,19 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.85.0",
     "@types/mocha": "^10.0.3",
     "@types/node": "18.x",
+    "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
     "eslint": "^8.52.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
-    "typescript": "^5.2.2",
-    "@vscode/test-electron": "^2.3.6"
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@types/xml2js": "^0.4.14",
+    "xml2js": "^0.6.2"
   }
 }
