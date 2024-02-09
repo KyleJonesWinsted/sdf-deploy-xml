@@ -6,9 +6,9 @@
   "engines": {
     "vscode": "^1.85.0"
   },
-  "icon": "TODO:",
+  "icon": "deployxmlicon.png",
   "repository": {
-    "url": "TODO:"
+    "url": "https://github.com/KyleJonesWinsted/sdf-deploy-xml"
   },
   "author": {
     "name": "Kyle Jones",
