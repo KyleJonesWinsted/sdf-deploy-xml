@@ -1,10 +1,18 @@
 {
   "name": "sdf-deploy-xml",
   "displayName": "SDF Deploy XML",
-  "description": "",
+  "description": "Utilities for working with `deploy.xml` files in the SuiteCloud Developer Framework.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.85.0"
+  },
+  "icon": "TODO:",
+  "repository": {
+    "url": "TODO:"
+  },
+  "author": {
+    "name": "Kyle Jones",
+    "email": "KyleJonesWinsted@gmail.com"
   },
   "categories": [
     "Other"
@@ -29,19 +37,7 @@
           "group": "z_commands@1"
         }
       ]
-    },
-    "keybindings": [
-      {
-        "command": "extension.createResetDeploy",
-        "key": "ctrl+; shift+-",
-        "mac": "cmd+; shift+-"
-      },
-      {
-        "command": "extension.addFileToDeploy",
-        "key": "ctrl+; shift+=",
-        "mac": "cmd+; shift+="
-      }
-    ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
