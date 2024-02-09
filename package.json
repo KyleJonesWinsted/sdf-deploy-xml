@@ -15,11 +15,11 @@
     "commands": [
       {
         "command": "extension.createResetDeploy",
-        "title": "Create/Reset deploy.xml"
+        "title": "SDF Deploy XML: Reset deploy.xml"
       },
       {
         "command": "extension.addFileToDeploy",
-        "title": "Add current/selected file to deploy.xml"
+        "title": "SDF Deploy XML: Add current file to deploy.xml"
       }
     ],
     "menus": {

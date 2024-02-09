@@ -30,9 +30,6 @@ export async function addFileToDeploy(context?: any) {
         currentFile = vscode.window.activeTextEditor?.document.fileName ?? '';
     }
 
-    let config = vscode.workspace.getConfiguration('netsuitesdf');
-    const addMatchingJSWhenAddingTSToDeployXML = config.get('addMatchingJavascriptWhenAddingTypescriptToDeployXML');
-
     const isFileInFileCabinet = currentFile.includes(path.join(rootPath, '/FileCabinet/SuiteScripts'));
     let isJavaScript = isFileInFileCabinet && currentFile.includes('.js');
     const isTypeScript = currentFile.includes('.ts');
@@ -40,7 +37,7 @@ export async function addFileToDeploy(context?: any) {
     let matchedJavaScriptFile: string = '';
 
     if (!isFileInFileCabinet && !isJavaScript && !isObject) {
-        if (isTypeScript && addMatchingJSWhenAddingTSToDeployXML) {
+        if (isTypeScript) {
             const matchedJavaScriptFiles: string[] = [];
             const currentFileName = path.basename(currentFile);
 
@@ -102,13 +99,19 @@ export async function addFileToDeploy(context?: any) {
         createResetDeploy();
     }
     const deployXml = await fs.readFile(deployPath);
-    const deployJs = await xml2js.parseStringPromise(deployXml);
-    const elements = deployJs.deploy[xmlPathKey][0].path ?? [];
+    const deployJs: DeployXML = await xml2js.parseStringPromise(deployXml);
+    if (typeof deployJs.deploy === 'string') {
+        deployJs.deploy = {};
+    }
+    const elements = deployJs.deploy[xmlPathKey]?.[0].path ?? [];
     if (elements.includes(relativePath)) {
         vscode.window.showInformationMessage(`${isObject ? 'Object' : 'File'} already exists in deploy.xml.`);
     } else {
         elements.push(relativePath);
-        deployJs.deploy[xmlPathKey][0].path = elements;
+        if (!deployJs.deploy[xmlPathKey]) {
+            deployJs.deploy[xmlPathKey] = [{ path: [] }];
+        }
+        deployJs.deploy[xmlPathKey]![0].path = elements;
 
         const newXml = new xml2js.Builder({ headless: true }).buildObject(deployJs);
         await fs.writeFile(deployPath, newXml);
@@ -118,6 +121,13 @@ export async function addFileToDeploy(context?: any) {
         );
     }
 }
+
+type DeployXML = {
+    deploy: string | {
+        files?: [{ path: string[] }];
+        objects?:  [{ path: string[] }];
+    }
+};
 
 async function fileExists(path: string): Promise<boolean> {
     try {
